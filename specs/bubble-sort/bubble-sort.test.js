@@ -11,58 +11,37 @@
 */
 
 function bubbleSort(nums) {
-  console.log(nums);
 
+  // Set that the list is not sorted yet
   let isListSorted = false;
+
   // While: list is not sorted
   while (!isListSorted) {
-    // For each item in the array, compare if the next item in the sequence is larger
-    // nums.forEach(numberItem => {
-    //   console.log(numberItem);
-    //   if(numberItem >= 10){
-    //     isListSorted = true;
-    //   }
-    // });
-
-    console.log("Nums in while: " + nums);
 
     let swapCounter = 0;
 
     // For each item in the array, compare if the next item in the sequence is larger
     for (let index = 0; index < nums.length; index++) {
-      if (nums[index] > nums[index + 1]){
-        let temp = nums[index];
-        nums[index] = nums[index + 1];
-        nums[index + 1] = temp;
+      // If the next item is smaller, swap them
+      if (nums[index] > nums[index + 1]){ 
+        let temp = nums[index]; // Store the first item in a temporary variable
+        nums[index] = nums[index + 1]; // Set the first item's value to the second
+        nums[index + 1] = temp; // Set the second item's value to the first
 
-        swapCounter ++;
+        // Increment the swap counter to note whether anything was swapped
+        swapCounter ++; 
       }
+
+      // If the next item is larger, go to the next item in the sequence
       
     }
 
-    if (swapCounter > 0) {
-      isListSorted = false;
-    } else {
-      isListSorted = true;
-    }
+    // Once all numbers have been iterated through, check if anything was swapped
+    // If nothing was swapped, set the list sorted to be true
+    if(swapCounter === 0) isListSorted = true;
   }
   
-  // If the next item is smaller, swap them
-  // If the next item is larger, go to the next item in the sequence
-  // Repeat the comparison
-  // Once all numbers have been iterated through, return a value to note wether items were swapped or not
-  // If items were swapped, go again
-  // If no items were swapped, return a value to say list is sorted
   // While loop ends
-
-  // for (let index = 0; index < nums.length; index++) {
-  //   if (index > index + 1){
-  //     [nums[index], nums[index +1]] = [nums[index + 1], nums[index]];
-  //   }
-
-  //   console.log(nums);
-    
-  // }
 
   return nums;
 }
