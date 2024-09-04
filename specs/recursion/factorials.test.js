@@ -10,11 +10,22 @@
   factorial(3) = 6 
 */
 
-function factorial(n) {}
+function factorial(n) {
+  let sum = 0;
+
+  if(n === 1){
+    sum = 1;
+    return sum;
+  }
+
+  sum = n * factorial(n - 1);
+
+  return sum;
+}
 
 // unit tests
 // do not modify the below code
-test.skip("factorials", () => {
+test("factorials", () => {
   expect(factorial(1)).toEqual(1);
   expect(factorial(2)).toEqual(2);
   expect(factorial(3)).toEqual(6);
