@@ -11,21 +11,18 @@
 */
 
 function factorial(n) {
-  let sum = 0;
 
-  if(n === 1){
-    sum = 1;
-    return sum;
+  if(n < 2){
+    return n * n;
   }
 
-  sum = n * factorial(n - 1);
-
-  return sum;
+  return n * factorial(n - 1);
 }
 
 // unit tests
 // do not modify the below code
 test("factorials", () => {
+  expect(factorial(0)).toEqual(0);
   expect(factorial(1)).toEqual(1);
   expect(factorial(2)).toEqual(2);
   expect(factorial(3)).toEqual(6);
