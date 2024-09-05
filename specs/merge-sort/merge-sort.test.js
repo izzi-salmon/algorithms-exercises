@@ -7,7 +7,28 @@
 */
 
 const mergeSort = (nums) => {
-  // code goes here
+  // [10, 5, 3, 8, 2, 6, 4, 7, 9, 1]
+  // Break the large array into two smaller arrays
+  // [10, 5, 3, 8, 2], [6, 4, 7, 9, 1]
+  // Break those arrays into two smaller arrays
+  // [10, 5, 3], [8, 2] // [6, 4, 7], [9, 1]
+  // Break those arrays into two smaller arrays
+  // [10, 5], [3] // [8], [2] // [6, 4], [7] // [9], [10]
+  // Break the larger arrays into smaller ones again
+  // [10], [5] // [3] // [8], [2] // [6], [4] // 7 // [9], [10]
+  // apply base case to already sorted (array length of one) arrays, return sorted list
+  // [10], [5]
+  // base case: which is the smallest item? Add to end of new array
+  // [10], [] => [5]
+  // One of the arrays is empty, concat the leftover array
+  // [5, 10]
+  // [5, 10], [3]
+  // which is the smallest item of 5 and 3? Add to end of new array
+  // [5, 10], [] => [3]
+  // which is the smallest item of 5 and 10? Add to end of array
+  // [10], [] => [3, 5]
+  // concat leftover
+  // [3, 5, 10]
 };
 
 // unit tests
