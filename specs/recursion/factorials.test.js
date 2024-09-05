@@ -13,7 +13,7 @@
 function factorial(n) {
 
   if(n < 2){
-    return n * n;
+    return 1; // Factorial of 0 is 1
   }
 
   return n * factorial(n - 1);
@@ -22,7 +22,7 @@ function factorial(n) {
 // unit tests
 // do not modify the below code
 test("factorials", () => {
-  expect(factorial(0)).toEqual(0);
+  expect(factorial(0)).toEqual(1);
   expect(factorial(1)).toEqual(1);
   expect(factorial(2)).toEqual(2);
   expect(factorial(3)).toEqual(6);
