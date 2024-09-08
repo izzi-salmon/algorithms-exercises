@@ -24,19 +24,33 @@ const mergeSort = (nums) => {
   // [10], [5] // [3] // [8], [2] // [6], [4] // 7 // [9], [10]
   // apply base case to already sorted (array length of one) arrays, return sorted list
   // [10], [5]
+
   // base case: Return sorted list
   if (nums.length === 1){
+    console.log("return sorted list: " + nums[0]);
     return nums[0];
   }
 
   const index = Math.round(nums.length / 2);
-  console.log(index);
 
-  let firstHalf = nums.slice(0, index);
-  let secondHalf = nums.slice(index);
+  const firstHalf = nums.slice(0, index);
+  const secondHalf = nums.slice(index);
 
   console.log(firstHalf);
   console.log(secondHalf);
+
+  let parentArray = [];
+
+  parentArray.push(firstHalf);
+  parentArray.push(secondHalf);
+
+  console.log(parentArray);
+
+  for (let i = 0; i < parentArray.length; i++) {
+    mergeSort(parentArray[i]);    
+  }
+
+  
 
   // which is the smallest item? Add to end of new array
   // [10], [] => [5]
