@@ -8,10 +8,54 @@
 
 // Move spliting logic into seperate function?
 const splitArray = (array) => {
+  // base case: Return sorted list
 
+  // This part doesn't feel right, what is the best way to write this?
+  if (array.length === 1){
+    // TODO: write 0 case ???
+      // console.log("return sorted list: " + array[0]);
+      return array[0];
+    
+  }
+
+  const index = Math.round(array.length / 2);
+
+  const firstHalf = array.slice(0, index);
+  const secondHalf = array.slice(index);
+
+  // console.log(firstHalf);
+  // console.log(secondHalf);
+
+  let parentArray = [];
+
+  parentArray.push(firstHalf);
+  parentArray.push(secondHalf);
+
+  // console.log(parentArray);
+
+  for (let i = 0; i < parentArray.length; i++) {
+    splitArray(parentArray[i]);
+  }
 }
 
 const mergeSort = (nums) => {
+
+  // Why does it keep returning undefined sometimes here?
+  splitArray(nums);
+
+  // How do I get two items into my merge function when I'm only returning one from splitArray?
+
+  // const sortedResult = splitArray(nums);
+  // let resultsArray = [];
+  
+  // resultsArray.push(splitArray(nums));
+
+  // console.log(resultsArray);
+  // console.log(splitArray(nums));
+
+  // console.log(sortedResult);
+
+
   // [10, 5, 3, 8, 2, 6, 4, 7, 9, 1]
   // Break the large array into two smaller arrays
   
@@ -24,31 +68,6 @@ const mergeSort = (nums) => {
   // [10], [5] // [3] // [8], [2] // [6], [4] // 7 // [9], [10]
   // apply base case to already sorted (array length of one) arrays, return sorted list
   // [10], [5]
-
-  // base case: Return sorted list
-  if (nums.length === 1){
-    console.log("return sorted list: " + nums[0]);
-    return nums[0];
-  }
-
-  const index = Math.round(nums.length / 2);
-
-  const firstHalf = nums.slice(0, index);
-  const secondHalf = nums.slice(index);
-
-  console.log(firstHalf);
-  console.log(secondHalf);
-
-  let parentArray = [];
-
-  parentArray.push(firstHalf);
-  parentArray.push(secondHalf);
-
-  console.log(parentArray);
-
-  for (let i = 0; i < parentArray.length; i++) {
-    mergeSort(parentArray[i]);    
-  }
 
   
 
@@ -65,8 +84,18 @@ const mergeSort = (nums) => {
   // [3, 5, 10]
 };
 
-const merge = () => {
+const merge = (itemA, itemB) => {
+  let mergedItems = [];
+  
+  if(itemA < itemB){
+    mergedItems.push(itemA);
+    mergedItems.push(itemB);
+  } else {
+    mergedItems.push(itemB);
+    mergedItems.push(itemA);
+  }
 
+  return mergedItems;
 }
 
 // unit tests
