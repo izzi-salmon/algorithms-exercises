@@ -14,37 +14,30 @@
 
 function quickSort(nums) {
   // base case, array length of 1 or 0
-  if(nums < 2){
+  if(nums.length < 2){
     return nums;
   }
   // choose pivot: last element in the list
   const pivot = nums[nums.length - 1];
 
-  // console.log(pivot);
-
-  let rightArray = [];
   let leftArray = [];
+  let rightArray = [];
 
    // seperate into left and right arrays
   for (let i = 0; i < nums.length; i++) {
-    console.log(nums[i]);
     // if smaller, add to left
     if(nums[i] < pivot){
       leftArray.push(nums[i]);
     } 
     // if larger, add to right    
-    else {
+    else if (nums[i] > pivot) {
       rightArray.push(nums[i]);
     }
   }
 
-  console.log(leftArray);
-  console.log(rightArray);
-
   // call quicksort on left and right arrays
-  // const sortedLeftArray =  quickSort(leftArray);
-  // const sortedRightArray = quickSort(rightArray);
-  
+  const sortedLeftArray =  quickSort(leftArray);
+  const sortedRightArray = quickSort(rightArray);
 
   // return left.concat(pivot, right)
   return sortedLeftArray.concat(pivot, sortedRightArray);
