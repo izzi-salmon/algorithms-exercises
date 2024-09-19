@@ -21,13 +21,33 @@ class Tree {
     this.root = null;
   }
   add(value) {
-    // logic around root or not
-    if(!this.root){
-      this.root = new Node(this.root);
-    } else {
 
+    if(this.root === null) {
+      this.root = new Node(value);
+    } else {
+      let current = this.root;
+      while(true) {
+        if(value <= current.value){
+          if(current.left) {
+            current = current.left;
+          }  else {
+            current.left = new Node(value);
+
+            break;
+          }
+        } else {
+          if(current.right){
+            current = current.right;
+          } else {
+            current.right = new Node(value);
+
+            break;
+          }
+        }
+      }
     }
-    // Find the correct place to add
+
+    return this;
   }
   toObject(){
     return this.root;
