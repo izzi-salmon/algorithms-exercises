@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 const preorderTraverse = (node, array) => {
   array.push(node.value);
   if(node.left){
