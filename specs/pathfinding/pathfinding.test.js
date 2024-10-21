@@ -15,10 +15,109 @@
 // it is opinionated of how to do that and you do not have to do it
 // the way I did. however feel free to use it if you'd like
 const logMaze = require("./logger");
+const NO_ONE = 0;
+const BY_A = 1;
+const BY_B = 2;
+
+function generateVisited(maze){
+  const visited = [];
+  for (let y = 0; y < maze.length; y++) {
+    const yAxis = [];
+    for (let x = 0; x < maze[y].length; x++) {
+      const coordinate = { 
+        closed: maze[y][x] === 1,
+        length: 0,
+        openedBy: NO_ONE,
+        x,
+        y
+      };
+      yAxis.push(coordinate);
+    }
+    visited.push(yAxis);
+  }
+
+  return visited;
+}
 
 function findShortestPathLength(maze, [xA, yA], [xB, yB]) {
-  // code goes here
+  const visited = generateVisited(maze);
+  visited[yA][xA].openedBy = BY_A;
+  visited[yB][xB].openedBy = BY_B;
+
+  let aQueue = [visited[yA][xA]];
+  let bQueue = [visited[yB][xB]];
+
+  let iteration = 0;
+
+  while (aQueue.length && bQueue.length) {
+    iteration++;
+
+    // Gather aNeighbours
+    let aNeighbours = [];
+    while(aQueue.length){
+      const coordinate = aQueue.shift();
+      aNeighbours = aNeighbours.concat(getNeighbours(visited, coordinate.x, coordinate.y));
+    }
+
+    // Process neighbours
+    for (let i = 0; i < aNeighbours.length; i++) {
+      const neighbour = aNeighbours[i];
+      if(neighbour.openedBy === BY_B){
+        return neighbour.length + iteration;
+      } else if(neighbour.openedBy === NO_ONE){
+        neighbour.length = iteration;
+        neighbour.openedBy = BY_A;
+        aQueue.push(neighbour);
+      }
+    }
+
+    // Gather bNeighbours
+    let bNeighbours = [];
+    while(bQueue.length){
+      const coordinate = bQueue.shift();
+      bNeighbours = bNeighbours.concat(getNeighbours(visited, coordinate.x, coordinate.y));
+    }
+
+    // Process neighbours
+    for (let i = 0; i < bNeighbours.length; i++) {
+      const neighbour = bNeighbours[i];
+      if(neighbour.openedBy === BY_A){
+        return neighbour.length + iteration;
+      } else if(neighbour.openedBy === NO_ONE){
+        neighbour.length = iteration;
+        neighbour.openedBy = BY_B;
+        bQueue.push(neighbour);
+      }
+    }
+  }
+  return -1;
 }
+
+const getNeighbours = (visited, x, y) => {
+  const neighbours = [];
+
+  if (y - 1 >= 0 && !visited[y - 1][x].closed) {
+    // left
+    neighbours.push(visited[y - 1][x]);
+  }
+
+  if (y + 1 < visited[0].length && !visited[y + 1][x].closed) {
+    // right
+    neighbours.push(visited[y + 1][x]);
+  }
+
+  if (x - 1 >= 0 && !visited[y][x - 1].closed) {
+    // up
+    neighbours.push(visited[y][x - 1]);
+  }
+
+  if (x + 1 < visited.length && !visited[y][x + 1].closed) {
+    // down
+    neighbours.push(visited[y][x + 1]);
+  }
+
+  return neighbours;
+};
 
 // there is a visualization tool in the completed exercise
 // it requires you to shape your objects like I did
@@ -26,7 +125,7 @@ function findShortestPathLength(maze, [xA, yA], [xB, yB]) {
 
 // unit tests
 // do not modify the below code
-describe.skip("pathfinding – happy path", function () {
+describe("pathfinding – happy path", function () {
   const fourByFour = [
     [2, 0, 0, 0],
     [0, 0, 0, 0],
@@ -90,7 +189,7 @@ describe.skip("pathfinding – happy path", function () {
 // I care far less if you solve these
 // nonetheless, if you're having fun, solve some of the edge cases too!
 // just remove the .skip from describe.skip
-describe.skip("pathfinding – edge cases", function () {
+describe("pathfinding – edge cases", function () {
   const byEachOther = [
     [0, 0, 0, 0, 0],
     [0, 2, 2, 0, 0],
