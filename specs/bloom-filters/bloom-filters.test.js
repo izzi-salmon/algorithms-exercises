@@ -17,35 +17,15 @@ class BloomFilter {
     this._array = new Array(100).fill(0);
   }
   add(string) {
-    // hash the string
-    const hashToAdd = h1(string);
-    // add the hash to the array
-    this._array[hashToAdd] = hashToAdd;
+    // hash the string with each hash function and mark its hashed location
+    this._array[h1(string)] = 1;
+    this._array[h2(string)] = 1;
+    this._array[h3(string)] = 1;
     return;
   }
   contains(string) {
-    // hash the string
-    const hashToFind = h1(string);
-    let arrayHasValues = false;
-    let matchFound = false;
-
-    for (let i = 0; i < this._array.length; i++) {
-      // Check if array has anything added
-      if(this._array[i] > 0){
-        arrayHasValues = true;
-      // compare the input hash to the current array
-        if(this._array[i] === hashToFind){
-          matchFound = true;
-        }
-      }
-    }
-
-    // return result
-    if(arrayHasValues){
-      return matchFound;
-    } else {
-      return false;
-    }
+    const matchFound = !!(this._array[h1(string)] && this._array[h2(string)] && this._array[h3(string)]);
+    return matchFound;
   }
 }
 
